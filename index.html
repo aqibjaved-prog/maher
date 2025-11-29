@@ -5,28 +5,1138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Warda Kumush - Handcrafted Elegance</title>
 
-  <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- NOTE: removed Google Identity & other remote SDKs to make this frontend-only -->
+  <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+  <!-- <script src="/_sdk/element_sdk.js"></script> -->
+  <!-- <script src="/_sdk/data_sdk.js"></script> -->
 
-  <script src="/_sdk/element_sdk.js"></script>
-  <script src="/_sdk/data_sdk.js"></script>
   <style>
-    /* (Your full CSS — unchanged) */
     /* === FULL ORIGINAL CSS (unchanged aside from tiny fixes) === */
     body {
       box-sizing: border-box;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow-x: hidden; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #fef5e7;
       color: #2c2c2c;
       line-height: 1.6;
     }
-    /* ... entire CSS from your file continues unchanged ... */
-    /* I kept your CSS intact exactly as you provided it. */
+
+    .main-wrapper {
+      width: 100%;
+      min-height: 100%;
+      position: relative;
+    }
+
+    /* Particles background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.3;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: float 12s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100%) translateX(30px); opacity: 0; }
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-top {
+      background: #8b4513;
+      color: #ffffff;
+      padding: 10px 0;
+      font-size: 0.85em;
+    }
+
+    .header-top-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-link:hover {
+      color: #f6ad55;
+    }
+
+    .header-main {
+      padding: 20px 0;
+    }
+
+    .header-main-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo-section {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .logo {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #8b4513;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+
+    .tagline {
+      font-size: 0.9em;
+      color: #718096;
+      letter-spacing: 1px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: #fff8e7;
+      border-radius: 8px;
+      border: 2px solid #d4af37;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .logout-btn {
+      padding: 6px 12px;
+      background: #ff6b6b;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #ee5a52;
+    }
+
+    .cart-button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: #8b4513;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(139, 69, 19, 0.3);
+    }
+
+    .cart-button:hover {
+      background: #6f3609;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4);
+    }
+
+    .cart-count {
+      background: #d4af37;
+      color: #2c2c2c;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85em;
+      font-weight: 700;
+    }
+
+    /* Auth Modal */
+    .auth-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-modal.active {
+      display: flex;
+    }
+
+    .auth-content {
+      background: #fff8e7;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 450px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border: 2px solid #d4af37;
+      position: relative;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .auth-header h2 {
+      font-size: 2em;
+      color: #2d3748;
+      margin-bottom: 10px;
+    }
+
+    .auth-header p {
+      color: #718096;
+      font-size: 0.95em;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      background: #fef5e7;
+      border: 2px solid #d4af37;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      color: #2d3748;
+    }
+
+    .auth-tab.active {
+      background: #8b4513;
+      color: #ffffff;
+      border-color: #8b4513;
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .close-auth {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: #8b4513;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .close-auth:hover {
+      background: #d4af37;
+      color: #ffffff;
+    }
+
+    .message-box {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.9em;
+      display: none;
+    }
+
+    .message-box.show {
+      display: block;
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      border: 1px solid #fcc;
+    }
+
+    .success-message-auth {
+      background: #efe;
+      color: #383;
+      border: 1px solid #cfc;
+    }
+
+    /* Cart Modal */
+    .cart-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .cart-modal.active {
+      display: flex;
+    }
+
+    .cart-content {
+      background: #fff8e7;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border: 2px solid #d4af37;
+    }
+
+    /* Checkout Form */
+    .checkout-form {
+      display: none;
+    }
+
+    .checkout-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #2d3748;
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #d4af37;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: inherit;
+      background: #fef5e7;
+      color: #2d3748;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #8b4513;
+      box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .payment-method {
+      background: #8b4513;
+      color: #ffffff;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 20px;
+      font-size: 1.1em;
+    }
+
+    .back-to-cart {
+      background: #718096;
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-right: 10px;
+      font-size: 1em;
+    }
+
+    .back-to-cart:hover {
+      background: #4a5568;
+    }
+
+    .order-summary {
+      background: #fef5e7;
+      border: 2px solid #d4af37;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .order-summary h3 {
+      color: #2d3748;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #d4af37;
+      color: #4a5568;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+      font-weight: 700;
+      color: #2d3748;
+      font-size: 1.1em;
+      margin-top: 10px;
+      padding-top: 15px;
+      border-top: 2px solid #8b4513;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .submit-order {
+      flex: 1;
+      padding: 16px;
+      background: #28a745;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    }
+
+    .submit-order:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(40, 167, 69, 0.5);
+    }
+
+    .submit-order:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-message.active {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 4em;
+      margin-bottom: 20px;
+    }
+
+    .success-message h3 {
+      color: #28a745;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+
+    .success-message p {
+      color: #4a5568;
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .close-success {
+      padding: 14px 32px;
+      background: #8b4513;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-success:hover {
+      background: #6f3609;
+      transform: translateY(-2px);
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #d4af37;
+    }
+
+    .cart-header h2 {
+      font-size: 2em;
+      color: #2d3748;
+      margin: 0;
+    }
+
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: #8b4513;
+      cursor: pointer;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .close-cart:hover {
+      background: #d4af37;
+      color: #ffffff;
+    }
+
+    .cart-items {
+      margin-bottom: 30px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: #fef5e7;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #d4af37;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .quantity-btn {
+      background: #d4af37;
+      color: #2c2c2c;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quantity-btn:hover {
+      background: #b8941e;
+      transform: scale(1.1);
+    }
+
+    .quantity-number {
+      font-weight: 600;
+      min-width: 30px;
+      text-align: center;
+      color: #2d3748;
+    }
+
+    .remove-item {
+      background: #ff6b6b;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 0.9em;
+    }
+
+    .remove-item:hover {
+      background: #ee5a52;
+      transform: translateY(-2px);
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #718096;
+      font-size: 1.1em;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: #8b4513;
+      color: #ffffff;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+
+    .checkout-button {
+      width: 100%;
+      padding: 16px;
+      background: #d4af37;
+      color: #2c2c2c;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    }
+
+    .checkout-button:hover {
+      background: #b8941e;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(212, 175, 55, 0.5);
+    }
+
+    .checkout-button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Added to cart notification */
+    .toast-notification {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: #28a745;
+      color: #ffffff;
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast-notification.show {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .action-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: #d4af37;
+      color: #2c2c2c;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .action-button:hover {
+      background: #b8941e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    }
+
+    .action-button.secondary {
+      background: #8b4513;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(139, 69, 19, 0.3);
+    }
+
+    .action-button.secondary:hover {
+      background: #6f3609;
+      box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4);
+    }
+
+    /* Main content */
+    .content-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* About section */
+    .about-section {
+      text-align: center;
+      padding: 50px 40px;
+      margin-bottom: 60px;
+      background: #fff8e7;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(139, 69, 19, 0.15);
+      border: 2px solid #d4af37;
+      transform: perspective(1000px) translateZ(0);
+      transition: transform 0.4s ease;
+    }
+
+    .about-section:hover {
+      transform: perspective(1000px) translateZ(20px);
+    }
+
+    .about-title {
+      font-size: 2.5em;
+      color: #2d3748;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .about-description {
+      font-size: 1.1em;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #4a5568;
+    }
+
+    /* Products section */
+    .products-section {
+      margin-bottom: 80px;
+    }
+
+    /* More products section */
+    .more-products-section {
+      margin-bottom: 80px;
+    }
+
+    .more-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .small-product-card {
+      background: #fff8e7;
+      border-radius: 20px;
+      padding: 30px 25px;
+      box-shadow: 0 4px 15px rgba(139, 69, 19, 0.12);
+      transition: all 0.3s ease;
+      transform: perspective(1000px) rotateY(0deg);
+      border: 2px solid #d4af37;
+    }
+
+    .small-product-card:hover {
+      transform: perspective(1000px) rotateY(5deg) translateY(-10px);
+      box-shadow: 0 8px 25px rgba(139, 69, 19, 0.2);
+      border-color: #8b4513;
+    }
+
+    .small-product-icon {
+      font-size: 3em;
+      text-align: center;
+      margin-bottom: 15px;
+      animation: float-icon 3s ease-in-out infinite;
+    }
+
+    .small-product-name {
+      font-size: 1.3em;
+      color: #2d3748;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .small-product-description {
+      text-align: center;
+      font-size: 0.95em;
+      color: #718096;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .small-buy-button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #d4af37;
+      color: #2c2c2c;
+      font-size: 1em;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .small-buy-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+      background: #b8941e;
+    }
+
+    .small-buy-button:active {
+      transform: translateY(0);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5em;
+      color: #2d3748;
+      margin-bottom: 50px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 50px;
+      padding: 20px;
+    }
+
+    .product-card {
+      background: #fff8e7;
+      border-radius: 25px;
+      padding: 40px 35px;
+      box-shadow: 0 4px 20px rgba(139, 69, 19, 0.12);
+      transition: all 0.4s ease;
+      transform: perspective(1000px) rotateX(0deg);
+      border: 2px solid #d4af37;
+    }
+
+    .product-card:hover {
+      transform: perspective(1000px) rotateX(5deg) translateY(-15px);
+      box-shadow: 0 8px 30px rgba(139, 69, 19, 0.2);
+      border-color: #8b4513;
+    }
+
+    .product-icon {
+      font-size: 4.5em;
+      text-align: center;
+      margin-bottom: 20px;
+      animation: float-icon 3s ease-in-out infinite;
+    }
+
+    @keyframes float-icon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .product-name {
+      font-size: 1.8em;
+      color: #2d3748;
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .product-description {
+      text-align: center;
+      font-size: 1.05em;
+      color: #718096;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .buy-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: #d4af37;
+      color: #2c2c2c;
+      font-size: 1.1em;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .buy-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+      background: #b8941e;
+    }
+
+    .buy-button:active {
+      transform: translateY(0);
+    }
+
+    /* Contact section */
+    .contact-section {
+      text-align: center;
+      padding: 40px 20px;
+      background: #8b4513;
+      color: #fef5e7;
+      position: relative;
+      z-index: 10;
+      margin-bottom: 0;
+    }
+
+    .contact-title {
+      font-size: 1.3em;
+      color: #fef5e7;
+      margin-bottom: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .contact-info-text {
+      font-size: 0.95em;
+      line-height: 1.8;
+      color: #fef5e7;
+      opacity: 0.9;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .contact-info-text span {
+      display: inline-block;
+      margin: 0 8px;
+    }
+
+    .contact-separator {
+      color: #d4af37;
+      margin: 0 5px;
+    }
+
+    .contact-link-phone {
+      color: #d4af37;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-weight: 600;
+    }
+
+    .contact-link-phone:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* Opening Animation Overlay */
+    .opening-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOutOverlay 0.8s ease 3s forwards;
+    }
+
+    @keyframes fadeOutOverlay {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .opening-logo {
+      font-size: 4.5em;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 3px;
+      animation: scaleIn 1s ease-out, floatUp 1s ease 2s forwards;
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    @keyframes scaleIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes floatUp {
+      to { transform: translateY(-30px) scale(1.1); opacity: 0; }
+    }
+
+    .main-content {
+      opacity: 0;
+      animation: fadeInContent 1s ease 3s forwards;
+    }
+
+    @keyframes fadeInContent {
+      to { opacity: 1; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #8b4513;
+      color: #fef5e7;
+      position: relative;
+      z-index: 10;
+      border-top: 2px solid #d4af37;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .logo { font-size: 2em; }
+      .tagline { font-size: 0.85em; }
+      .products-grid { grid-template-columns: 1fr; gap: 30px; }
+      .section-title { font-size: 2em; }
+      .about-title, .contact-title { font-size: 2em; }
+      .contact-info-text { font-size: 0.9em; line-height: 2; }
+      .contact-info-text span { display: block; margin: 5px 0; }
+      .contact-separator { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .header-actions { width: 100%; justify-content: center; }
+    }
   </style>
+
   <style>@view-transition { navigation: auto; }</style>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
 </head>
@@ -220,9 +1330,9 @@
           <button type="submit" class="submit-order">Create Account</button>
         </div>
 
-        <!-- Google Sign-in button container (visual only, no UI change) -->
+        <!-- NOTE: Google sign-in removed from this frontend-only copy -->
         <div style="margin-top:12px; text-align:center;">
-          <div id="gsi-button"></div>
+          <!-- placeholder for future social buttons -->
         </div>
       </form>
     </div>
@@ -326,43 +1436,10 @@
   <!-- Toast -->
   <div class="toast-notification" id="toast-notification"><span>✓</span> <span id="toast-message">Added to cart!</span></div>
 
-  <!-- === SCRIPT: MAIN LOGIC (auth, cart, ui, elementSdk) === -->
+  <!-- === SCRIPT: MAIN LOGIC (UI, cart, local auth) === -->
   <script>
-    /* ===== CONFIG: Put your actual routes/ids here if you want to change ===== */
-    // ← I set this to the Apps Script exec URL that you shared earlier.
-    // If you deployed a different script / ID, replace only this string.
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwcUM8wPM-e3S4BbHKCjzTvQUq2fFpqElvhman4hZoY53GBsEzDOu-IWNbbEORsrBWp/exec';
-    const GOOGLE_CLIENT_ID = '346476233996-5tfqnql33kp687g3fhvhjs6vvs8fadv6.apps.googleusercontent.com';
-
-    /* ===== DEFAULT CONFIG ===== */
-    const defaultConfig = {
-      background_color: "#fef5e7",
-      surface_color: "#fff8e7",
-      text_color: "#2c2c2c",
-      primary_action_color: "#d4af37",
-      secondary_action_color: "#8b4513",
-      company_name: "Warda Kumush",
-      tagline: "Handcrafted Elegance in Every Stitch",
-      about_title: "Our Craft",
-      about_description: "At Warda Kumush, we create beautiful and elegant handmade soft products with love and precision. Each piece is carefully crafted using traditional crochet techniques, bringing warmth and sophistication to your life. Our collection features exquisite handmade items that combine artistry with comfort.",
-      products_title: "Featured Collection",
-      product1_name: "Handmade Bracelet",
-      product1_description: "Delicately crafted crochet bracelets that add a touch of elegance to any outfit. Each bracelet is a unique piece of wearable art.",
-      product2_name: "Handmade Roses",
-      product2_description: "Beautiful crochet roses that last forever. Perfect for gifting or decorating your space with timeless elegance and charm.",
-      contact_title: "Get In Touch",
-      manager_label: "Managed By",
-      manager_name: "Maher Alam",
-      proprietor_label: "Proprietor",
-      proprietor_name: "Alish Parveen",
-      address_label: "Address",
-      address: "Bakshiwala Road, Bukhara, Bijnor 246701",
-      phone_label: "Contact",
-      phone_number: "+91 76681 12278",
-      buy_now_button: "Buy Now"
-    };
-
-    /* ===== Small UI helpers ===== */
+    /* ===== No external backend calls in this frontend-only copy ===== */
+    // Helper: show toast / errors / success
     function showToast(message) {
       const toast = document.getElementById('toast-notification');
       if (!toast) return;
@@ -370,7 +1447,6 @@
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
-
     function showError(message) {
       const errorDiv = document.getElementById('auth-error');
       if (!errorDiv) return;
@@ -379,7 +1455,6 @@
       document.getElementById('auth-success')?.classList.remove('show');
       setTimeout(() => errorDiv.classList.remove('show'), 4000);
     }
-
     function showSuccess(message) {
       const successDiv = document.getElementById('auth-success');
       if (!successDiv) return;
@@ -388,21 +1463,6 @@
       document.getElementById('auth-error')?.classList.remove('show');
       setTimeout(() => successDiv.classList.remove('show'), 3000);
     }
-
-    /* ===== dataSdk init (kept) ===== */
-    let allUsers = [];
-    const dataHandler = { onDataChanged(data) { allUsers = data; } };
-    async function initDataSDK() {
-      if (window.dataSdk) {
-        try {
-          const result = await window.dataSdk.init(dataHandler);
-          if (!result.isOk) console.error("Failed to initialize data SDK");
-        } catch (e) {
-          console.warn("dataSdk init error", e);
-        }
-      }
-    }
-    initDataSDK();
 
     /* ===== Particles ===== */
     function createParticles() {
@@ -420,7 +1480,7 @@
     }
     createParticles();
 
-    /* ===== Cart management ===== */
+    /* ===== Cart management (client-side only) ===== */
     let cart = [];
     const products = [
       { id: 1, name: 'Handmade Bracelet' },
@@ -527,6 +1587,15 @@
       document.getElementById('cart-view').style.display = 'block';
     });
 
+    /* ===== IMPORTANT: No backend calls. sendToAppsScript is a harmless stub ===== */
+    async function sendToAppsScript(payload) {
+      // This frontend-only build intentionally does NOT send network requests.
+      // We log the payload to console so you can copy & use it later when you re-enable the backend.
+      console.info('sendToAppsScript (stub) payload:', payload);
+      // Return a resolved promise like a successful disabled response
+      return { ok: false, error: 'backend-disabled', raw: null };
+    }
+
     document.getElementById('checkout-form-element')?.addEventListener('submit', function(e) {
       e.preventDefault();
       const submitBtn = this.querySelector('.submit-order');
@@ -549,12 +1618,11 @@
         userId: getSessionUser() ? getSessionUser().email : 'guest'
       };
 
-      // send order to Apps Script (single call using helper)
+      // Use the local stub (no network)
       sendToAppsScript(formData)
-        .then(r => console.log('apps script order result', r))
-        .catch(e => console.warn('AppsScript error', e))
+        .then(r => console.log('apps script (stub) result', r))
+        .catch(e => console.warn('apps script (stub) error', e))
         .finally(() => {
-          // UI handling after request (keeps UX snappy even if network slow)
           setTimeout(() => {
             document.getElementById('checkout-form')?.classList.remove('active');
             document.getElementById('success-message')?.classList.add('active');
@@ -576,7 +1644,7 @@
       document.getElementById(id)?.addEventListener('click', () => addToCart(idx+1));
     });
 
-    /* ===== LocalStorage Auth + Session ===== */
+    /* ===== LocalStorage Auth + Session (client-only) ===== */
 
     // hashing utility
     async function sha256Hex(str) {
@@ -674,10 +1742,8 @@
           if (btn) { btn.disabled = false; btn.textContent = 'Create Account'; }
 
           if (res.ok) {
-            // Auto-login after signup
+            // Auto-login after signup (local)
             setSessionUser(res.user);
-            // persist to Apps Script backend (form-encoded)
-            await sendToAppsScript({ action: 'signup', fullName: name, email: email, phone: phone, notes: 'signup-local' });
             showSuccess('Account created and signed in!');
             updateUIForUser({ full_name: res.user.full_name, email: res.user.email, phone: res.user.phone });
             this.reset();
@@ -752,177 +1818,21 @@
 
     })(); // end auth installer
 
-    /* ===== elementSdk onConfigChange (kept) ===== */
-    async function onConfigChange(config) {
-      document.getElementById('company-name').textContent = config.company_name || defaultConfig.company_name;
-      document.getElementById('tagline').textContent = config.tagline || defaultConfig.tagline;
-      document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
-      document.getElementById('about-description').textContent = config.about_description || defaultConfig.about_description;
-      document.getElementById('products-title').textContent = config.products_title || defaultConfig.products_title;
-      document.getElementById('product1-name').textContent = config.product1_name || defaultConfig.product1_name;
-      document.getElementById('product1-description').textContent = config.product1_description || defaultConfig.product1_description;
-      document.getElementById('product2-name').textContent = config.product2_name || defaultConfig.product2_name;
-      document.getElementById('product2-description').textContent = config.product2_description || defaultConfig.product2_description;
-      document.getElementById('contact-title').textContent = config.contact_title || defaultConfig.contact_title;
-      document.getElementById('manager-label').textContent = config.manager_label || defaultConfig.manager_label;
-      document.getElementById('manager-name').textContent = config.manager_name || defaultConfig.manager_name;
-      document.getElementById('proprietor-label').textContent = config.proprietor_label || defaultConfig.proprietor_label;
-      document.getElementById('proprietor-name').textContent = config.proprietor_name || defaultConfig.proprietor_name;
-      document.getElementById('address-label').textContent = config.address_label || defaultConfig.address_label;
-      document.getElementById('address').textContent = config.address || defaultConfig.address;
-      document.getElementById('phone-label').textContent = config.phone_label || defaultConfig.phone_label;
-      document.getElementById('phone-number').textContent = config.phone_number || defaultConfig.phone_number;
-      document.getElementById('buy-now-button').textContent = config.buy_now_button || defaultConfig.buy_now_button;
-
-      const backgroundColor = config.background_color || defaultConfig.background_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
-      const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
-
-      document.body.style.background = backgroundColor;
-      document.body.style.color = textColor;
-      const logoEl = document.querySelector('.logo');
-      if (logoEl) logoEl.style.color = primaryActionColor;
-      document.querySelectorAll('.about-title, .section-title, .product-name, .small-product-name').forEach(el => el.style.color = textColor);
-      document.querySelectorAll('.buy-button, .small-buy-button, .checkout-button').forEach(btn => btn.style.background = primaryActionColor);
-      document.querySelectorAll('.action-button').forEach(btn => {
-        if (btn.classList.contains('secondary')) btn.style.background = secondaryActionColor;
-        else btn.style.background = primaryActionColor;
-      });
-      const contactSection = document.querySelector('.contact-section');
-      if (contactSection) contactSection.style.background = secondaryActionColor;
-      const footer = document.querySelector('footer');
-      if (footer) footer.style.background = secondaryActionColor;
-      const headerTop = document.querySelector('.header-top');
-      if (headerTop) headerTop.style.background = secondaryActionColor;
-      const cartButton = document.querySelector('.cart-button');
-      if (cartButton) cartButton.style.background = secondaryActionColor;
-      document.querySelectorAll('.cart-total, .payment-method').forEach(el => el.style.background = secondaryActionColor);
-    }
-
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            { get: () => config.background_color || defaultConfig.background_color, set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); } },
-            { get: () => config.surface_color || defaultConfig.surface_color, set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); } },
-            { get: () => config.text_color || defaultConfig.text_color, set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); } },
-            { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (value) => { config.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); } },
-            { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (value) => { config.secondary_action_color = value; window.elementSdk.setConfig({ secondary_action_color: value }); } }
-          ],
-          borderables: [], fontEditable: undefined, fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ["company_name", config.company_name || defaultConfig.company_name],
-          ["tagline", config.tagline || defaultConfig.tagline],
-          ["about_title", config.about_title || defaultConfig.about_title],
-          ["about_description", config.about_description || defaultConfig.about_description],
-          ["products_title", config.products_title || defaultConfig.products_title],
-          ["product1_name", config.product1_name || defaultConfig.product1_name],
-          ["product1_description", config.product1_description || defaultConfig.product1_description],
-          ["product2_name", config.product2_name || defaultConfig.product2_name],
-          ["product2_description", config.product2_description || defaultConfig.product2_description],
-          ["contact_title", config.contact_title || defaultConfig.contact_title],
-          ["manager_label", config.manager_label || defaultConfig.manager_label],
-          ["manager_name", config.manager_name || defaultConfig.manager_name],
-          ["proprietor_label", config.proprietor_label || defaultConfig.proprietor_label],
-          ["proprietor_name", config.proprietor_name || defaultConfig.proprietor_name],
-          ["address_label", config.address_label || defaultConfig.address_label],
-          ["address", config.address || defaultConfig.address],
-          ["phone_label", config.phone_label || defaultConfig.phone_label],
-          ["phone_number", config.phone_number || defaultConfig.phone_number],
-          ["buy_now_button", config.buy_now_button || defaultConfig.buy_now_button]
-        ])
-      });
-    }
-
-    /* ===== Apps Script POST helper =====
-       We send form-encoded data (no Content-Type header) so browser won't do preflight.
-       The Apps Script doPost(e) will receive these values in e.parameter.
+    /* ===== elementSdk onConfigChange kept but will only run if element SDK is present.
+       Since we've removed the remote SDK script, this block won't do anything in this frontend-only file.
     */
-    async function sendToAppsScript(payload) {
+    async function onConfigChange(config) {
       try {
-        // Convert payload to URLSearchParams (form-encoded)
-        const params = new URLSearchParams();
-        for (const k in payload) {
-          if (payload[k] === undefined || payload[k] === null) continue;
-          params.append(k, String(payload[k]));
-        }
-
-        const res = await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          body: params // no 'Content-Type' header so browser sends application/x-www-form-urlencoded and avoids preflight
-        });
-
-        const text = await res.text().catch(()=>null);
-        try {
-          const json = text ? JSON.parse(text) : null;
-          return { ok: res.ok, status: res.status, json, raw: text };
-        } catch (e) {
-          return { ok: res.ok, status: res.status, raw: text };
-        }
-      } catch (err) {
-        console.error('sendToAppsScript error', err);
-        return { ok: false, error: err.message || String(err) };
-      }
+        document.getElementById('company-name').textContent = config.company_name || 'Warda Kumush';
+        document.getElementById('tagline').textContent = config.tagline || 'Handcrafted Elegance in Every Stitch';
+      } catch (e) { /* ignore */ }
     }
 
-    /* ===== Google Identity helpers ===== */
-    function parseJwt (token) {
-      try {
-        const parts = token.split('.');
-        if (parts.length !== 3) return null;
-        const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
-        const decoded = atob(payload);
-        return JSON.parse(decodeURIComponent(escape(decoded)));
-      } catch (e) {
-        console.error('parseJwt error', e);
-        return null;
-      }
-    }
-
-    async function handleCredentialResponse(response) {
-      const profile = parseJwt(response.credential);
-      if (!profile) {
-        showError('Google sign-in failed (parse).');
-        return;
-      }
-      const name = profile.name || profile.email || '';
-      const email = profile.email || '';
-      const session = { full_name: name, email: email, phone: '' };
-      setSessionUser(session);
-      updateUIForUser(session);
-      showSuccess('Signed in with Google');
-
-      // persist Google user to Apps Script (form-encoded)
-      await sendToAppsScript({
-        action: 'google-signin',
-        fullName: name,
-        email: email,
-        phone: '',
-        notes: 'signed-in-google'
-      });
-
-      document.getElementById('auth-modal')?.classList.remove('active');
-    }
-
-    function initGoogleSignIn() {
-      if (!window.google || !GOOGLE_CLIENT_ID) return;
-      google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleCredentialResponse,
-        ux_mode: 'popup'
-      });
-      google.accounts.id.renderButton(
-        document.getElementById('gsi-button'),
-        { theme: 'outline', size: 'medium', width: '250' }
-      );
-      // google.accounts.id.prompt(); // optional
-    }
-    window.addEventListener('load', initGoogleSignIn);
-
+    // No Google identity initialization here (removed from frontend-only copy).
+    window.addEventListener('load', () => {
+      // make sure cart UI is correct on load
+      updateCartUI();
+    });
   </script>
 
 </body>
