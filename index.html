@@ -1638,22 +1638,49 @@
       e.preventDefault();
       const submitBtn = this.querySelector('.submit-order');
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Processing...'; }
-      const formData = {
-        action: 'order',
-        fullName: document.getElementById('full-name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address-field').value,
-        city: document.getElementById('city').value,
-        pincode: document.getElementById('pincode').value,
-        state: document.getElementById('state').value,
-        notes: document.getElementById('notes').value,
-        items: cart.map(item => `${item.name} (Qty: ${item.quantity})`).join(', '),
-        totalItems: cart.reduce((s,i) => s + i.quantity, 0),
-        paymentMethod: 'Cash on Delivery (COD)',
-        orderDate: new Date().toLocaleString(),
-        userId: getSessionUser() ? getSessionUser().email : 'guest'
-      };
+const formData = {
+    action: 'order',
+    fullName: document.getElementById('full-name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    address: document.getElementById('address-field').value,
+    city: document.getElementById('city').value,
+    pincode: document.getElementById('pincode').value,
+    state: document.getElementById('state').value,
+    notes: document.getElementById('notes').value,
+    items: cart.map(item => `${item.name} (Qty: ${item.quantity})`).join(', '),
+    totalItems: cart.reduce((s,i) => s + i.quantity, 0),
+    paymentMethod: 'Cash on Delivery (COD)',
+    orderDate: new Date().toLocaleString(),
+    userId: getSessionUser() ? getSessionUser().email : 'guest'
+};
+
+// ⭐ SEND ORDER TO GOOGLE SHEET BACKEND
+fetch("https://script.google.com/macros/s/AKfycbxZjR0nE8dduH2kmw-IhHKRzdFhcHzsdlabha05sJwpdHNP98jAb2KtVcefacH433uJ/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        action: "placeOrder",
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        pincode: formData.pincode,
+        state: formData.state,
+        notes: formData.notes,
+        items: formData.items,
+        totalItems: formData.totalItems,
+        paymentMethod: "COD"
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log("Order saved in Google Sheet:", data);
+})
+.catch(err => {
+    console.error("Order FAILED:", err);
+});
       // send to Apps Script
       sendToAppsScript(formData).then((r)=>console.log('apps script order result', r)).catch(e=>console.warn(e));
       console.log('Order placed:', formData);
