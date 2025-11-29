@@ -1438,9 +1438,8 @@
   <!-- === SCRIPT: MAIN LOGIC (auth, cart, ui, elementSdk) === -->
   <script>
     /* ===== CONFIG: Put your actual routes/ids here if you want to change ===== */
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZjR0nE8dduH2kmw-IhHKRzdFhcHzsdlabha05sJwpdHNP98jAb2KtVcefacH433uJ/exec';
-    const GOOGLE_CLIENT_ID = '346476233996-5tfqnql33kp687g3fhvhjs6vvs8fadv6.apps.googleusercontent.com';
-
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwcUM8wPM-e3S4BbHKCjzTvQUq2fFpqElvhman4hZoY53GBsEzDOu-IWNbbEORsrBWp/exec';
+const GOOGLE_CLIENT_ID = '346476233996-5tfqnql33kp687g3fhvhjs6vvs8fadv6.apps.googleusercontent.com';
     /* ===== DEFAULT CONFIG ===== */
     const defaultConfig = {
       background_color: "#fef5e7",
@@ -1655,32 +1654,23 @@ const formData = {
     userId: getSessionUser() ? getSessionUser().email : 'guest'
 };
 
-// ⭐ SEND ORDER TO GOOGLE SHEET BACKEND
-fetch("https://script.google.com/macros/s/AKfycbxZjR0nE8dduH2kmw-IhHKRzdFhcHzsdlabha05sJwpdHNP98jAb2KtVcefacH433uJ/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        action: "placeOrder",
-        fullName: formData.fullName,
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-        city: formData.city,
-        pincode: formData.pincode,
-        state: formData.state,
-        notes: formData.notes,
-        items: formData.items,
-        totalItems: formData.totalItems,
-        paymentMethod: "COD"
-    })
-})
-.then(res => res.json())
-.then(data => {
-    console.log("Order saved in Google Sheet:", data);
-})
-.catch(err => {
-    console.error("Order FAILED:", err);
-});
+// send order to Apps Script (single call)
+sendToAppsScript({
+  action: 'placeOrder',
+  fullName: formData.fullName,
+  email: formData.email,
+  phone: formData.phone,
+  address: formData.address,
+  city: formData.city,
+  pincode: formData.pincode,
+  state: formData.state,
+  notes: formData.notes,
+  items: formData.items,
+  totalItems: formData.totalItems,
+  paymentMethod: formData.paymentMethod || 'COD',
+  userId: formData.userId || 'guest',
+  orderDate: formData.orderDate
+}).then(r => console.log('apps script order result', r)).catch(e => console.warn('AppsScript error', e));
       // send to Apps Script
       sendToAppsScript(formData).then((r)=>console.log('apps script order result', r)).catch(e=>console.warn(e));
       console.log('Order placed:', formData);
